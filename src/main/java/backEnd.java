@@ -14,7 +14,7 @@ public class backEnd {
         s.createIndex();
         
         //busqueda de prueba
-        s.search("South");
+        s.search("puente");
         
     }
 }
