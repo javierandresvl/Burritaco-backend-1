@@ -1,3 +1,5 @@
+package service;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -135,7 +137,7 @@ public class Searcher
             int docId = hits[i].doc;
             org.apache.lucene.document.Document d = searcher.doc(docId);
             listDocuments.add(d);
-            System.out.println("Hora: "+ d.get("hora") + "\t " + d.get("id") + "\t" + d.get("tweet"));
+            //System.out.println("Hora: "+ d.get("hora") + "\t " + d.get("id") + "\t" + d.get("tweet"));
         }
         
         indexReader.close();
