@@ -43,7 +43,20 @@ public class CongestionsService {
     for(i=0;i<congestiones.size();i++){
         if(id == congestiones.get(i).getCommuneId()){ //si el id de la comuna es igual al ingresado
             hora=congestiones.get(i).getCongestionHour(); //se guarda la hora
-            horarios[hora-1]++;                      //se aumenta la posicion en el arreglo
+            /* PARA EL CASO DEL HORARIO LOCAL
+            if(hora == 0){
+              horarios[23]++;
+            }
+            else{
+              horarios[hora-1]++;
+            }*/
+            //PARA EL CASO DEL HORARIO DEL VPS
+            if(hora < 4){
+              horarios[hora+20]++;
+            }
+            else{
+              horarios[hora-4]++;
+            }
         }
     }
     return  gson.toJson(horarios);
