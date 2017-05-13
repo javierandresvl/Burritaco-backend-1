@@ -96,11 +96,17 @@ public class Searcher
                 String tweetActual = d.get("tweet").toString();
                 String tweetId = d.get("_id").toString();
                 String hour = d.get("hora").toString();
+                String year = d.get("year").toString();
+                String month = d.get("month").toString();
+                String day = d.get("day").toString();
                 
                 org.apache.lucene.document.Document docLucene = new org.apache.lucene.document.Document();
                 docLucene.add(new TextField("tweet", tweetActual, Field.Store.YES));
                 docLucene.add(new StringField("id", tweetId, Field.Store.YES));
                 docLucene.add(new StringField("hora",hour,Field.Store.YES));
+                docLucene.add(new StringField("year",year,Field.Store.YES));
+                docLucene.add(new StringField("month",month,Field.Store.YES));
+                docLucene.add(new StringField("day",day,Field.Store.YES));
                 w.addDocument(docLucene);
                 
             }
@@ -137,7 +143,8 @@ public class Searcher
             int docId = hits[i].doc;
             org.apache.lucene.document.Document d = searcher.doc(docId);
             listDocuments.add(d);
-            //System.out.println("Hora: "+ d.get("hora") + "\t " + d.get("id") + "\t" + d.get("tweet"));
+
+            System.out.println("Hora: "+ d.get("hora") + "\t " + d.get("id") + "\t" + d.get("tweet") + "\t" + "año: " + d.get("year") + "\t" + "mes: " + d.get("month") + "\t" + "dia: " + d.get("day"));
         }
         
         indexReader.close();
