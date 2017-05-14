@@ -72,8 +72,13 @@ public class Searcher
         
         // 1. create the index
         
-        //**** ESTO ES EN EL CASO DE MI PC *******
-        Directory directory = FSDirectory.open( new File("/home/javier/Desktop/INDICE"));
+        /*
+        
+        CAMBIAR LA DIRECCION DEL DIRECTORIO A UNO CORRESPONDIENTE AL VPS
+        
+        */
+        
+        Directory directory = FSDirectory.open( new File("/home/javier/Desktop/INDICE")); //AQUIIIIII
         Directory index = new RAMDirectory();
         IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_43, analyzer);
         IndexWriter w = new IndexWriter(directory, config);
@@ -121,8 +126,14 @@ public class Searcher
     
     public List<org.apache.lucene.document.Document> search(String query) throws IOException, ParseException
     {   
-        //**** ESTO ES EN EL CASO DE MI PC *******
-        File indexDir = new File("/home/javier/Desktop/INDICE");
+        
+          /*
+        
+        CAMBIAR LA DIRECCION DEL DIRECTORIO A UNO CORRESPONDIENTE AL VPS
+        
+        */
+        
+        File indexDir = new File("/home/javier/Desktop/INDICE"); //AQUIIIIIII
         Directory directory = FSDirectory.open(indexDir);
         
         IndexReader  indexReader  = DirectoryReader.open(directory);        

@@ -33,8 +33,10 @@ public class backEnd {
     
     @GET
     @Produces("text/plain")
-    public String getClichedMessage()
-    {
-        return "SOY BACKEND Y ESTOY PROBANDO";
+    public String getClichedMessage() throws IOException, ParseException
+    {   
+        Searcher s = new Searcher();
+        s.createIndex();
+        return "SE HA CREADO EL INDICE INVERTIDO CON LOS TWEETS DE MONGO";
     }
 }
