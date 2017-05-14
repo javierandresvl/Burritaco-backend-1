@@ -15,3 +15,7 @@ deben llenar las congestiones con las 53 comunas.
 OBTENER EL ARREGLO PARA LOS GRAFICOS
 http://localhost:4848/Burritaco-backend//congestions/id
 donde id correspone al id de la comuna a la cual consultaran el gráfico.
+
+CREAR EL INDICE INVERTIDO (teniendo ya el mongo ejecutado y con datos)
+http://localhost:4848/Burritaco-backend/main
+PD: AL INSTALARLO EN EL VPS CAMBIAR LOS DIRECTORIOS DE LA CLASE searcher.java A UNA CORRESPONDIENTE CON EL VPS.
