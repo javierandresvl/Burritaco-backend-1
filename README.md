@@ -25,7 +25,7 @@ Donde id corresponde al id de la comuna que van a llenar la tabla de congestione
 Deben llenar las congestiones con las 53 comunas.
 
 #### OBTENER EL ARREGLO PARA LOS GRAFICOS
-http://localhost:8080/Burritaco-backend//congestions/id
+http://localhost:8080/Burritaco-backend/congestions/id
 Donde id correspone al id de la comuna a la cual consultaran el gráfico.
 
 #### CREAR EL INDICE INVERTIDO (teniendo ya el mongo ejecutado y con datos)
