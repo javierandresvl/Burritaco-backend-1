@@ -30,6 +30,7 @@ dependencies {
     compile group: 'org.apache.lucene', name: 'lucene-core', version: '4.3.0'
     compile group: 'org.apache.lucene', name: 'lucene-queryparser', version: '4.3.0'
     compile group: 'org.apache.lucene', name: 'lucene-analyzers-common', version: '4.3.0'
+<<<<<<< HEAD
     compile 'org.mongodb:mongodb-driver:3.4.2'
     compile group: 'commons-io', name: 'commons-io', version: '2.5'
     compile group: 'org.mongodb', name: 'bson', version: '3.0.4'
@@ -54,4 +55,6 @@ war {
     //classpath fileTree('src/main/java/META-INF/persistence.xml')
     //sclasspath configurations.moreLibs // adds a configuration to the WEB-INF/lib dir.
     webXml = file('src/main/webapp/WEB-INF/web.xml') // copies a file to WEB-INF/web.xml
+=======
+>>>>>>> refs/remotes/origin/master
 }
