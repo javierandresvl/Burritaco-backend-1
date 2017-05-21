@@ -26,6 +26,15 @@ public class Congestion implements Serializable
     @Column(name="congestions_hour", nullable=true)
     private int congestionHour;
     
+    @Column(name="congestions_day", nullable=true)
+    private int congestionDay;
+    
+    @Column(name="congestions_month", nullable=true)
+    private int congestionMonth;
+    
+    @Column(name="congestions_year", nullable=true)
+    private int congestionYear;
+    
     public int getCongestionId() 
     {
         return this.congestionId;
@@ -44,6 +53,21 @@ public class Congestion implements Serializable
     public int getCongestionHour()
     {
         return this.congestionHour;
+    }
+    
+    public int getCongestionDay()
+    {
+        return this.congestionDay;
+    }
+    
+    public int getCongestionMonth()
+    {
+        return this.congestionMonth;
+    }
+    
+    public int getCongestionYear()
+    {
+        return this.congestionYear;
     }
     
     public void setCongestionId(int id)
@@ -65,6 +89,23 @@ public class Congestion implements Serializable
     {
         this.congestionHour = when;
     }
+    
+    public void setCongestionDay(int dia)
+    {
+        this.congestionDay = dia;
+    }
+    
+    public void setCongestionMonth(int mes)
+    {
+        this.congestionMonth = mes;
+    }
+    
+    public void setCongestionYear(int year)
+    {
+        this.congestionYear = year;
+    }
+    
+    
     
 }
 
