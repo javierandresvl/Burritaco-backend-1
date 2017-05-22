@@ -37,19 +37,16 @@ public class CongestionsService {
   @Produces({"text/plain", "application/json"})
     public String findCommune(@PathParam("id") int id){
     int[] horarios=new int[24]; //arreglo con cada hora (0 a 23hrs)
-    int i, hora;
-    Gson gson=new GsonBuilder().create();
+    int i, j, hora, menorMes=12,mayorMes=1,dia;
+    String str = null,str2=null;
+    JsonObject object = new JsonObject();
     List<Congestion> congestiones= congestionsFacadeEJB.findAll(); //todas las congestiones
+    int cantCongestiones = congestiones.size();
     for(i=0;i<congestiones.size();i++){
         if(id == congestiones.get(i).getCommuneId()){ //si el id de la comuna es igual al ingresado
             hora=congestiones.get(i).getCongestionHour(); //se guarda la hora
             /* PARA EL CASO DEL HORARIO LOCAL
-            if(hora == 0){
-              horarios[23]++;
-            }
-            else{
-              horarios[hora-1]++;
-            }*/
+              horarios[hora]++;*/
             //PARA EL CASO DEL HORARIO DEL VPS
             if(hora < 4){
               horarios[hora+20]++;
@@ -59,7 +56,81 @@ public class CongestionsService {
             }
         }
     }
-    return  gson.toJson(horarios);
+
+    for(i=0;i<24;i++){
+        hora=horarios[i];
+        if(i < 10){
+            str="0"+i+":00";
+            object.addProperty(str,hora);
+        }
+        else{
+            str=i+":00";
+            object.addProperty(str,hora);
+        }
+    }
+    
+    
+    //con el siguiente for se obtiene el menor y mayor mes de los datos recolectados de twitter
+    for(i=0;i<cantCongestiones;i++){
+        j=congestiones.get(i).getCongestionMonth(); //se obtiene el mes de la congestion i
+        if(j<menorMes){
+            menorMes=j;                             //menor mes
+        }
+        
+        if(j>mayorMes){
+            mayorMes=j;                             //mayor mes
+        }
+    }
+    
+    //si menor y mayor mes son iguales, solo se debe buscar el menor y maximo dia 
+    //para fecha inicial y final
+    if(menorMes == mayorMes){
+            dia=1;
+            for(i=0;i<cantCongestiones;i++){
+                j=congestiones.get(i).getCongestionDay();
+                if(j > dia){
+                    dia=j;
+                }
+            }
+            str2=dia+"/"+menorMes+"/"+2017;
+            
+            dia=31;
+            for(i=0;i<cantCongestiones;i++){
+                j=congestiones.get(i).getCongestionDay();
+                if(j < dia){
+                    dia=j;
+                }
+            }
+            str=dia+"/"+menorMes+"/"+2017;
+        }
+    //en caso contrario, para la fecha inicial se debe buscar el menor dia del menor mes
+    //y para fecha final, el mayor dia del mayor mes
+    else{
+        dia=1;
+        for(i=0;i<cantCongestiones;i++){
+            j=congestiones.get(i).getCongestionDay();
+            if(j < dia && congestiones.get(i).getCongestionMonth()==menorMes){
+                dia=j;
+            }
+        }
+        
+        str=dia+"/"+menorMes+"/"+2017;    
+        dia=31;
+        
+        for(i=0;i<cantCongestiones;i++){
+            j=congestiones.get(i).getCongestionDay();
+            if(j > dia && congestiones.get(i).getCongestionMonth()==mayorMes){
+                dia=j;
+            }
+        }
+        
+        str2=dia+"/"+mayorMes+"/"+2017;
+    }
+ 
+    object.addProperty("fecha inicial", str);
+    object.addProperty("fecha termino", str2);
+    
+    return  object.toString();
   }
   
   //servicio que entrega los datos para el grafico comparativo de las comunas
@@ -75,7 +146,6 @@ public class CongestionsService {
     int[] congestionComuna=new int[cantComunas]; //aca se guardara la cantidad de congestion de cada comuna
     int i=0, aux=0, j=0, menorMes=12,mayorMes=1,dia;
     String str=null,str2=null;
-    JsonArray array = new JsonArray();      //un arreglo de tipo Json
     JsonObject object = new JsonObject();
     for(i=0;i<cantComunas;i++){
         comunasId[i]=comunas.get(i).getCommuneId(); //se guardan los ids de las comunas
@@ -91,7 +161,7 @@ public class CongestionsService {
     }
     //con el siguiente for se agregan los datos obtenidos al objeto Json creado.
     for(i=0;i<cantComunas;i++){           
-        str="id"+comunasId[i];
+        str=""+comunasId[i];
         object.addProperty(str,congestionComuna[i]);  
     }
     
