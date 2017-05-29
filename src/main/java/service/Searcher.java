@@ -104,6 +104,9 @@ public class Searcher
                 String year = d.get("year").toString();
                 String month = d.get("month").toString();
                 String day = d.get("day").toString();
+                String user = d.get("user").toString();
+                String isRetweet = d.get("isRetweet").toString();
+                String originalUser = d.get("originalUser").toString();
                 
                 org.apache.lucene.document.Document docLucene = new org.apache.lucene.document.Document();
                 docLucene.add(new TextField("tweet", tweetActual, Field.Store.YES));
@@ -112,6 +115,9 @@ public class Searcher
                 docLucene.add(new StringField("year",year,Field.Store.YES));
                 docLucene.add(new StringField("month",month,Field.Store.YES));
                 docLucene.add(new StringField("day",day,Field.Store.YES));
+                docLucene.add(new StringField("user",user,Field.Store.YES));
+                docLucene.add(new StringField("isRetweet",isRetweet,Field.Store.YES));
+                docLucene.add(new StringField("originalUser",originalUser,Field.Store.YES));
                 w.addDocument(docLucene);
                 
             }
