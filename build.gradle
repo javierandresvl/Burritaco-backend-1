@@ -39,6 +39,8 @@ dependencies {
     compile 'mysql:mysql-connector-java:5.1.30'
     testCompile 'org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-simple:2.17'
     testCompile 'javax.servlet:javax.servlet-api:3.1.0'
+    
+    compile group: 'org.neo4j.driver', name: 'neo4j-java-driver', version: '1.2.0'
 
     compile group: 'com.google.code.gson', name: 'gson', version: '2.8.0'
 }

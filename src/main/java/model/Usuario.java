@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
-/**
- *
- * @author javier
- */
 public class Usuario {
     
     public Usuario(){}
@@ -16,5 +7,37 @@ public class Usuario {
     String nombreUsuario;
     int popularidad;
     String comuna;
+    
+    //Setters
+    public void setNombre(String nombre)
+    {
+        this.nombreUsuario = nombre;
+    }
+    
+    public void setComuna(String commune)
+    {
+        this.comuna = commune;
+    }
+    
+    public void setPopularidad(int popularity)
+    {
+        this.popularidad = popularity;
+    }
+    
+    //Getters
+    public String getNombre()
+    {
+        return this.nombreUsuario;
+    }
+    
+    public String getcomuna()
+    {
+        return this.comuna;
+    }
+    
+    public int getPopularidad()
+    {
+        return this.popularidad;
+    }
     
 }
