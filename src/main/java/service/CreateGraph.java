@@ -26,31 +26,32 @@ public class CreateGraph {
     }
 
     private void createNodes(List<Usuario> usuarios) {
-        
-        //session.run( "CREATE (a:Commune {name:'"+names.+"'})");
-        
-        
         //Esto te lo debe pasar Javier -> names, como objetos tipo Twittero
-        
-        for(Usuario users:usuarios)
+        for(Usuario user:usuarios)
         {
-            session.run( "CREATE (a:Person {name:'"+users.getNombre()+"'})");
+            //Si la persona no existe dentro de la base de datos de grafos
+            if(!session.run("MATCH (tom {name:"+user.getNombre()+"}) RETURN tom").hasNext())
+            {
+                session.run( "CREATE (a:Person {name:'"+user.getNombre()+"'})");
+            }
+            
+            createMatch(user.getNombre(),user.getcomuna());
         }
-        
-        createMatch(usuarios);
-        
     }
 
-    private void createMatch(List<Usuario> usuarios) {
+    private void createMatch(String persona, String comuna) {
         
-        for(Usuario users : usuarios)
+        //Si la comuna no existe dentro de la base de datos de grafos
+        if(!session.run("MATCH (tom {name:'"+comuna+"'}) RETURN tom").hasNext())
         {
-            session.run("match (a:Person) where a.name='"+users.getNombre()+"' "
-                //+ "  match (b:Commune) where b.name='"+commune+"' "
-                + "  create (a)-[r:Tweeted {reason:'Uno de los twitteros mas influyentes en relacion a la congestion en esta comuna.'}]->(b)");
+            session.run( "CREATE (a:Commune {name:'"+comuna+"'})");
+            System.out.println("Se ha creado: "+comuna+"\n");
         }
+        
+        session.run("match (a:Person) where a.name='"+persona+"' "
+        + "  match (b:Commune) where b.name='"+comuna+"' "
+        + "  create (a)-[r:Tweeted {reason:'Uno de los twitteros mas influyentes en relacion a la congestion en esta comuna.'}]->(b)");
+        
     }
-    
-    
     
 }
