@@ -139,11 +139,17 @@ public class CommuneService
             {   
                 //System.out.println("ENTRE AL SEGUNDO FOR ME CACHAI \n\n");
                 tweet = listaTweets.get(q);
-                when = Integer.parseInt(tweet.get("hora"));
+                int hour = Integer.parseInt(tweet.get("hora"));
+                int day = Integer.parseInt(tweet.get("day"));
+                int month = Integer.parseInt(tweet.get("month"));
+                int year = Integer.parseInt(tweet.get("year"));
                 //c = congestionFacadeEJB.create(Congestion);
                 c = new Congestion();
                 c.setCommuneId(id);
-                c.setCongestionHour(when);
+                c.setCongestionHour(hour);
+                c.setCongestionDay(day);
+                c.setCongestionMonth(month);
+                c.setCongestionYear(year);
                 c.setCongestionStreet(nombreCalle);
                 congestionFacadeEJB.create(c);
                 

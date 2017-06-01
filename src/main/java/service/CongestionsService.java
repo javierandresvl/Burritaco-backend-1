@@ -37,7 +37,7 @@ public class CongestionsService {
   @Produces({"text/plain", "application/json"})
     public String findCommune(@PathParam("id") int id){
     int[] horarios=new int[24]; //arreglo con cada hora (0 a 23hrs)
-    int i, j, hora, menorMes=12,mayorMes=1,dia;
+    int i, j, hora, menorMes=13,mayorMes=0,dia;
     String str = null,str2=null;
     JsonObject object = new JsonObject();
     List<Congestion> congestiones= congestionsFacadeEJB.findAll(); //todas las congestiones
@@ -106,7 +106,7 @@ public class CongestionsService {
     //en caso contrario, para la fecha inicial se debe buscar el menor dia del menor mes
     //y para fecha final, el mayor dia del mayor mes
     else{
-        dia=1;
+        dia=32;
         for(i=0;i<cantCongestiones;i++){
             j=congestiones.get(i).getCongestionDay();
             if(j < dia && congestiones.get(i).getCongestionMonth()==menorMes){
@@ -115,7 +115,7 @@ public class CongestionsService {
         }
         
         str=dia+"/"+menorMes+"/"+2017;    
-        dia=31;
+        dia=0;
         
         for(i=0;i<cantCongestiones;i++){
             j=congestiones.get(i).getCongestionDay();
@@ -144,7 +144,7 @@ public class CongestionsService {
     int cantCongestiones = congestiones.size();
     int[] comunasId=new int[cantComunas];   //aca se guardan los ids de las comunas
     int[] congestionComuna=new int[cantComunas]; //aca se guardara la cantidad de congestion de cada comuna
-    int i=0, aux=0, j=0, menorMes=12,mayorMes=1,dia;
+    int i=0, aux=0, j=0, menorMes=13,mayorMes=0,dia;
     String str=null,str2=null;
     JsonObject object = new JsonObject();
     for(i=0;i<cantComunas;i++){
@@ -180,7 +180,7 @@ public class CongestionsService {
     //si menor y mayor mes son iguales, solo se debe buscar el menor y maximo dia 
     //para fecha inicial y final
     if(menorMes == mayorMes){
-            dia=1;
+            dia=0;
             for(i=0;i<cantCongestiones;i++){
                 j=congestiones.get(i).getCongestionDay();
                 if(j > dia){
@@ -189,7 +189,7 @@ public class CongestionsService {
             }
             str2=dia+"/"+menorMes+"/"+2017;
             
-            dia=31;
+            dia=32;
             for(i=0;i<cantCongestiones;i++){
                 j=congestiones.get(i).getCongestionDay();
                 if(j < dia){
@@ -201,7 +201,7 @@ public class CongestionsService {
     //en caso contrario, para la fecha inicial se debe buscar el menor dia del menor mes
     //y para fecha final, el mayor dia del mayor mes
     else{
-        dia=1;
+        dia=32;
         for(i=0;i<cantCongestiones;i++){
             j=congestiones.get(i).getCongestionDay();
             if(j < dia && congestiones.get(i).getCongestionMonth()==menorMes){
@@ -210,7 +210,7 @@ public class CongestionsService {
         }
         
         str=dia+"/"+menorMes+"/"+2017;    
-        dia=31;
+        dia=0;
         
         for(i=0;i<cantCongestiones;i++){
             j=congestiones.get(i).getCongestionDay();
@@ -224,6 +224,7 @@ public class CongestionsService {
  
     object.addProperty("fecha inicial", str);
     object.addProperty("fecha termino", str2);
+    
     return  object.toString();
   }
 }
