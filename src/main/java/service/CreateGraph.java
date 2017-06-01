@@ -30,7 +30,7 @@ public class CreateGraph {
         for(Usuario user:usuarios)
         {
             //Si la persona no existe dentro de la base de datos de grafos
-            if(!session.run("MATCH (tom {name:"+user.getNombre()+"}) RETURN tom").hasNext())
+            if(!session.run("MATCH (tom {name:'"+user.getNombre()+"'}) RETURN tom").hasNext())
             {
                 session.run( "CREATE (a:Person {name:'"+user.getNombre()+"'})");
             }
