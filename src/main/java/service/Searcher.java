@@ -78,7 +78,7 @@ public class Searcher
         
         */
         
-        Directory directory = FSDirectory.open( new File("/home/madkileras/INDICE")); //AQUIIIIII
+        Directory directory = FSDirectory.open( new File("/home/javier/Desktop/indice")); //AQUIIIIII
         Directory index = new RAMDirectory();
         IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_43, analyzer);
         IndexWriter w = new IndexWriter(directory, config);
@@ -139,7 +139,7 @@ public class Searcher
         
         */
         
-        File indexDir = new File("/home/madkileras/INDICE"); //AQUIIIIIII
+        File indexDir = new File("/home/javier/Desktop/indice"); //AQUIIIIIII
         Directory directory = FSDirectory.open(indexDir);
         
         IndexReader  indexReader  = DirectoryReader.open(directory);        

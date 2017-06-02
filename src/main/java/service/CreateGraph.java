@@ -10,7 +10,7 @@ import org.neo4j.driver.v1.Session;
 
 
 public class CreateGraph {
-    Driver driver = GraphDatabase.driver( "bolt://localhost", AuthTokens.basic( "neo4j", "neo4j" ) );
+    Driver driver = GraphDatabase.driver( "bolt://localhost", AuthTokens.basic( "neo4j", "admin" ) );
     Session session = driver.session();
     
     

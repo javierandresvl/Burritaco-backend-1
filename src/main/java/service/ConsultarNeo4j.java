@@ -7,11 +7,14 @@ package service;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import model.Usuario;
+import org.apache.lucene.queryparser.classic.ParseException;
 import org.neo4j.driver.v1.AuthTokens;
 import org.neo4j.driver.v1.Driver;
 import org.neo4j.driver.v1.GraphDatabase;
@@ -21,13 +24,14 @@ import org.neo4j.driver.v1.StatementResult;
 
 @Path("/neo4j")
 public class ConsultarNeo4j {
-
+    
+    
     @GET
     @Path("/nodes")
     @Produces({"text/plain", "application/json"})
     public String find() {
         //se genera la conexion a neo4j
-        Driver driver = GraphDatabase.driver( "bolt://localhost:7687", AuthTokens.basic( "neo4j", "root" ) );
+        Driver driver = GraphDatabase.driver( "bolt://localhost", AuthTokens.basic( "neo4j", "admin" ) );
         Session session = driver.session();
         int i,id1,id2;
         //se consula por los nodos de tipo persona
@@ -102,4 +106,6 @@ public class ConsultarNeo4j {
 
         return object.toString();
 
-}}
+    }
+    
+}
