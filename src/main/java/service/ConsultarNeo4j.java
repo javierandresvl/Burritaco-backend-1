@@ -56,7 +56,7 @@ public class ConsultarNeo4j {
             peso.add(record.get("peso").asInt());
         }
         
-        while(usr.size()>50){//mientras los usuarios sean mayor a 50
+        while(usr.size()>100){//mientras los usuarios sean mayor a 100
             int aux=peso.get(0);
             int j=0;
             for(i=1;i<usr.size();i++){//se busca el usuario menos influyente
