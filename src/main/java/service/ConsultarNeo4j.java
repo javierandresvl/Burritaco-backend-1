@@ -31,15 +31,17 @@ public class ConsultarNeo4j {
     @Produces({"text/plain", "application/json"})
     public String find() {
         //se genera la conexion a neo4j
-        Driver driver = GraphDatabase.driver( "bolt://localhost", AuthTokens.basic( "neo4j", "admin" ) );
+        Driver driver = GraphDatabase.driver( "bolt://localhost", AuthTokens.basic( "neo4j", "root" ) );
         Session session = driver.session();
         int i,id1,id2;
         //se consula por los nodos de tipo persona
-        StatementResult result = session.run( "MATCH (a:Person) RETURN a.name as name");
+        StatementResult result = session.run( "MATCH (a:Person) RETURN a.name as name,a.weight as peso");
         //se crea un array de string para guardar los nombres de todos los nodos
         List<String> nombres = new ArrayList<String>();
         //se crea un array de string para guardar el nombre de los nodos de tipo persona
         List<String> usr = new ArrayList<String>();
+        //arreglo con los pesos de los que realizan tweets
+        List<Integer> peso = new ArrayList<Integer>();
         //se crea un JsonObject para agregar valores de tipo Json
         JsonObject object = null;
         //se crean 2 arrays Json, uno para los nodos y otro para las relaciones(edges)
@@ -50,16 +52,38 @@ public class ConsultarNeo4j {
         while (result.hasNext())//mientras la consulta tenga datos
         {
             Record record = result.next();
-            object =new JsonObject();
-            object.addProperty("id", "n"+id1);//agrega el id al Json
-            id1++;//aumentamos el id
-            object.addProperty("label", record.get("name").asString());//agrega el nombre al Json
-            object.addProperty("size", 2);//agrega el porte del nodo al Json
-            object.addProperty("type", "Person");//agrega el tipo de nodo al Json
-            nombres.add(record.get("name").asString());//se agrega el nombre del nodo a nombres
             usr.add(record.get("name").asString());//se agrega el nombre del nodo a usr
-            arrayNodes.add(object);//se agrega el JsonObject creado al array de nodos
+            peso.add(record.get("peso").asInt());
         }
+        
+        while(usr.size()>50){//mientras los usuarios sean mayor a 50
+            int aux=peso.get(0);
+            int j=0;
+            for(i=1;i<usr.size();i++){//se busca el usuario menos influyente
+                if(aux>peso.get(i)){
+                    aux=peso.get(i);
+                    j=i;
+                }
+            }
+            usr.remove(j); //se elimina el usuario menos influyente
+            peso.remove(j);
+        }
+        
+        for(i=0;i<usr.size();i++){
+            object =new JsonObject();
+            object.addProperty("id", "n"+id1);//se crea un id para el nodo
+            id1++;//aumentamos id del nodo
+            object.addProperty("label", usr.get(i)); //se agrega el nombre
+            object.addProperty("size", 1); //se agrega porte del nodo
+            object.addProperty("type","person"); //se agrega el tipo
+            object.addProperty("weight", peso.get(i)); //se agrega el peso
+            nombres.add(usr.get(i));  //se agrega el nombre del nodo a nombres
+            arrayNodes.add(object); //se agrega el JsonObject creado al array de nodos
+        }
+        
+        
+        
+        
         //se consulta por las comunas
         result = session.run( "MATCH (c:Commune) RETURN c.name as name");
         while (result.hasNext())
@@ -69,7 +93,7 @@ public class ConsultarNeo4j {
             object.addProperty("id", "n"+id1);
             id1++;
             object.addProperty("label", record.get("name").asString());
-            object.addProperty("size", 1);
+            object.addProperty("size", 2);
             object.addProperty("type", "Commune");
             nombres.add(record.get("name").asString());
             arrayNodes.add(object);
